@@ -1,10 +1,28 @@
-import { FC } from "react";
+import { type } from "os";
+import { FC, useState } from "react";
 
 interface Props {
   visible: boolean;
+  onSubmit(link: linkOption): void;
 }
 
-const LinkForm: FC<Props> = ({ visible }): JSX.Element | null => {
+export type linkOption = {
+  url: string;
+  openInNewTab: boolean;
+};
+
+const LinkForm: FC<Props> = ({ visible, onSubmit }): JSX.Element | null => {
+  const [link, setLink] = useState<linkOption>({
+    url: "",
+    openInNewTab: false,
+  });
+
+  const handleSubmit = () => {
+    if (!link.url.trim()) return;
+
+    onSubmit(link);
+  };
+
   if (!visible) return null;
   return (
     <div className="rounded p-2 bg-primary dark:bg-primary-dark shadow-sm shadow-secondary-dark">
@@ -13,13 +31,25 @@ const LinkForm: FC<Props> = ({ visible }): JSX.Element | null => {
         type="text"
         className="bg-transparent rounded border-2 border-secondary-dark focus:border-primary-dark dark:focus:border-primary transition p-2 text-primary-dark dark:text-primary"
         placeholder="https://example.com"
+        value={link.url}
+        onChange={({ target }) => setLink({ ...link, url: target.value })}
       />
 
       <div className="flex items-center space-x-2 mt-2">
-        <input type="checkbox" id="open-in-new-tab" />
+        <input
+          type="checkbox"
+          id="open-in-new-tab"
+          checked={link.openInNewTab}
+          onChange={({ target }) =>
+            setLink({ ...link, openInNewTab: target.checked })
+          }
+        />
         <label htmlFor="open-in-new-tab">open in newtab</label>
         <div className="flex text-right">
-          <button className="bg-action px-2 py-1 text-primary rounded text-sm">
+          <button
+            onClick={handleSubmit}
+            className="bg-action px-2 py-1 text-primary rounded text-sm"
+          >
             Apply
           </button>
         </div>

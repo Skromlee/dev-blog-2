@@ -19,6 +19,7 @@ import {
 import { getFocusedEditor } from "./EditorUtils";
 import Button from "./Button";
 import InsertLink from "../Link/InsertLink";
+import { linkOption } from "../Link/LinkForm";
 
 interface Props {
   editor: Editor | null;
@@ -45,6 +46,10 @@ const ToolBar: FC<Props> = ({ editor }): JSX.Element | null => {
       onClick: () => getFocusedEditor(editor).toggleHeading({ level: 3 }).run(),
     },
   ];
+
+  const handleLinkSubmit = (link: linkOption) => {
+    console.log(link);
+  };
 
   const getLabel = (): string => {
     if (editor.isActive("heading", { level: 1 })) return "Heading 1";
@@ -121,7 +126,7 @@ const ToolBar: FC<Props> = ({ editor }): JSX.Element | null => {
           <BsBraces />
         </Button>
 
-        <InsertLink />
+        <InsertLink onSubmit={handleLinkSubmit} />
 
         <Button
           active={editor.isActive("orderedList")}
