@@ -12,16 +12,21 @@ export type linkOption = {
   openInNewTab: boolean;
 };
 
+const defaultLink = {
+  url: "",
+  openInNewTab: false,
+};
+
 const LinkForm: FC<Props> = ({ visible, onSubmit }): JSX.Element | null => {
-  const [link, setLink] = useState<linkOption>({
-    url: "",
-    openInNewTab: false,
-  });
+  const [link, setLink] = useState<linkOption>(defaultLink);
 
   const handleSubmit = () => {
-    if (!link.url.trim()) return;
-
     onSubmit({ ...link, url: validdateUrl(link.url) });
+    resetForm();
+  };
+
+  const resetForm = () => {
+    setLink({ ...defaultLink });
   };
 
   if (!visible) return null;

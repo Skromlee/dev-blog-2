@@ -4,6 +4,8 @@ export const getFocusedEditor = (editor: Editor) => {
 };
 
 export const validdateUrl = (url: string) => {
+  if (!url.trim()) return "";
+
   let finalUrl;
   try {
     finalUrl = new URL(url);
