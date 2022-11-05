@@ -1,5 +1,6 @@
 import { type } from "os";
 import { FC, useState } from "react";
+import { validdateUrl } from "../Toolbar/EditorUtils";
 
 interface Props {
   visible: boolean;
@@ -20,7 +21,7 @@ const LinkForm: FC<Props> = ({ visible, onSubmit }): JSX.Element | null => {
   const handleSubmit = () => {
     if (!link.url.trim()) return;
 
-    onSubmit(link);
+    onSubmit({ ...link, url: validdateUrl(link.url) });
   };
 
   if (!visible) return null;
