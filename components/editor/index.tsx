@@ -5,6 +5,7 @@ import ToolBar from "./Toolbar";
 import Underline from "@tiptap/extension-underline";
 import Placeholder from "@tiptap/extension-placeholder";
 import Link from "@tiptap/extension-link";
+import EditLink from "./Link/EditLink";
 
 interface Props {}
 
@@ -54,6 +55,7 @@ const Editor: FC<Props> = (props): JSX.Element => {
     <div className="p-3 dark:bg-primary-dark bg-primary transition">
       <ToolBar editor={editor} />
       <div className="h-[1px] w-full bg-secondary-dark dark:bg-secondary-light my-3" />
+      {editor ? <EditLink editor={editor} /> : null}
       <EditorContent editor={editor} />
     </div>
   );
